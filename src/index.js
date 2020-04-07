@@ -9,25 +9,32 @@ import {Provider} from "react-redux"
 
 let initialState = {
   countNum: 0,
-  color: 'pink',
-  boxColors: [null],
+  boxList: [],
+  backgroundColor :''
 }
 
 function countReducer (state=initialState,action){
   if(action.type === 'INCREMENT'){
   state.countNum ++;  
+  state.boxList.push('')
   
-  }if(action.type === 'DECREMENT'){
+  }else if(action.type === 'DECREMENT'){
+    if(state.countNum === 0){
+      state.countNum = 0
+    }else{
     state.countNum --;  
-    
-  }if(action.type === 'RESET'){
-  state.countNum = state.countNum - state.countNum;  
-  
-  }if(action.type === 'CHANGE_COLOR'){
-    state.color = action.payload 
+    state.boxList.pop();
     }
+  
+  }else if(action.type === 'RESET'){
+        state.countNum = action.payload; 
+  }else if(action.type === 'CHANGE_COLOR'){
+    state.backgroundColor = action.payload 
+  }else if(action.type === 'SINGLECOLOR'){
+    state.boxList[action.payload.id] = action.payload.color 
+  }  
     
-  return state;
+  return state;  
 }
 
 
